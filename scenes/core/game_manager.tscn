@@ -14,14 +14,15 @@ grow_vertical = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Control" unique_id=85290612]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-stretch = true
+offset_right = 106.0
+offset_bottom = 111.0
 
 [node name="SubViewport" type="SubViewport" parent="Control/SubViewportContainer" unique_id=1238478279]
-size = Vector2i(40, 40)
+handle_input_locally = false
+size = Vector2i(1152, 648)
 size_2d_override = Vector2i(1152, 648)
 size_2d_override_stretch = true
+render_target_update_mode = 4
 
 [node name="Sprite2D" type="Sprite2D" parent="Control/SubViewportContainer/SubViewport" unique_id=637440453]
 position = Vector2(50, 50)
