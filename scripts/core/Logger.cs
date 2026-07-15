@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Godot;
 
 namespace Game.Core;
@@ -9,7 +10,7 @@ public static class Logger
     {
         var dateTime = DateTime.Now;
         string timeStamp = $"[{dateTime:yyyy-MM-dd HH:mm:ss}]";
-        var callingMethod = new System.Diagnostics.StackTrace().GetFrame(2).GetMethod();
+        var callingMethod = new StackTrace().GetFrame(2).GetMethod();
         string logMessage =
             $@"{timeStamp} [{level}] [{callingMethod.DeclaringType.Name}] [{callingMethod.Name}] ";
 
