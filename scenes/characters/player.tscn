@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://bcqhycw5u1hef" path="res://assets/characters/player.png" id="1_rp718"]
 [ext_resource type="Script" uid="uid://dwe52jwdr84g4" path="res://scripts/gameplay/characters/PlayerInput.cs" id="1_yewv4"]
+[ext_resource type="Script" uid="uid://cub5hx1bmh8bt" path="res://scripts/gameplay/characters/CharacterMovement.cs" id="2_76oj4"]
+[ext_resource type="Script" uid="uid://bvg441e4ljmh8" path="res://scripts/gameplay/characters/CharacterAnimation.cs" id="4_dyp2m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40t45"]
 size = Vector2(16, 16)
@@ -275,14 +277,20 @@ debug_color = Color(4.813075e-06, 0.6466164, 0.24018714, 0.41960785)
 [node name="Input" type="Node" parent="." unique_id=730941897]
 script = ExtResource("1_yewv4")
 
-[node name="Movement" type="Node" parent="." unique_id=182255397]
+[node name="Movement" type="Node" parent="." unique_id=182255397 node_paths=PackedStringArray("Character", "CharacterInput")]
+script = ExtResource("2_76oj4")
+Character = NodePath("..")
+CharacterInput = NodePath("../Input")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=477882830]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=477882830 node_paths=PackedStringArray("CharacterInput", "CharacterMovement")]
 texture_filter = 1
 position = Vector2(8, 4)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_40t45")
 animation = &"walk_down"
+script = ExtResource("4_dyp2m")
+CharacterInput = NodePath("../Input")
+CharacterMovement = NodePath("../Movement")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=785444553]
 position = Vector2(8, 8)
