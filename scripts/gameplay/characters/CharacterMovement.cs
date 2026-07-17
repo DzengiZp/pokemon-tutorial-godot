@@ -6,7 +6,7 @@ namespace Game.Core;
 public partial class CharacterMovement : Node
 {
     [Signal]
-    public delegate void AnimationEventHandler(string animation);
+    public delegate void AnimationEventHandler(string animationType);
 
     [ExportCategory("Nodes")]
     [Export]
@@ -26,6 +26,7 @@ public partial class CharacterMovement : Node
     {
         CharacterInput.Walk += StartWalking;
         CharacterInput.Turn += Turn;
+
         Logger.Info("Loading player movement component ...");
     }
 
@@ -57,17 +58,17 @@ public partial class CharacterMovement : Node
         {
             Character.Position = Character.Position.MoveToward(
                 TargetPosition,
-                (float)delta * Globals.Instance.GRID_SIZE
+                (float)delta * Globals.Instance.GRID_SIZE * 4
             );
 
-            if (Character.Position.DistanceTo(TargetPosition) > 1f)
+            if (Character.Position.DistanceTo(TargetPosition) < 1f)
             {
                 StopWalking();
             }
         }
         else
         {
-            EmitSignal(SignalName.Animation, "walk");
+            EmitSignal(SignalName.Animation, "idle");
         }
     }
 
@@ -79,8 +80,7 @@ public partial class CharacterMovement : Node
 
     public void Turn()
     {
-                    EmitSignal(SignalName.Animation, "turn");
-
+        EmitSignal(SignalName.Animation, "turn");
     }
 
     public void SnapPositionToGrid()
@@ -88,9 +88,8 @@ public partial class CharacterMovement : Node
         Character.Position = new Vector2(
             Mathf.Round(Character.Position.X / Globals.Instance.GRID_SIZE)
                 * Globals.Instance.GRID_SIZE,
-            Mathf.Round(
-                Character.Position.Y / Globals.Instance.GRID_SIZE * Globals.Instance.GRID_SIZE
-            )
+            Mathf.Round(Character.Position.Y / Globals.Instance.GRID_SIZE)
+                * Globals.Instance.GRID_SIZE
         );
     }
 }
