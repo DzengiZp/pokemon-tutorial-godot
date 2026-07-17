@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://dra7wv8o36j33"]
 
+[ext_resource type="Script" uid="uid://coj4m7nwb6dwt" path="res://scripts/gameplay/characters/Player.cs" id="1_6eyoc"]
 [ext_resource type="Texture2D" uid="uid://bcqhycw5u1hef" path="res://assets/characters/player.png" id="1_rp718"]
 [ext_resource type="Script" uid="uid://dwe52jwdr84g4" path="res://scripts/gameplay/characters/PlayerInput.cs" id="1_yewv4"]
 [ext_resource type="Script" uid="uid://cub5hx1bmh8bt" path="res://scripts/gameplay/characters/CharacterMovement.cs" id="2_76oj4"]
 [ext_resource type="Script" uid="uid://bvg441e4ljmh8" path="res://scripts/gameplay/characters/CharacterAnimation.cs" id="4_dyp2m"]
+[ext_resource type="Script" uid="uid://cyr483w44y4m5" path="res://scripts/utilities/StateMachine.cs" id="5_atpat"]
+[ext_resource type="Script" uid="uid://luncr7c0jxkf" path="res://scripts/gameplay/characters/states/PlayerRoamState.cs" id="6_kqtwu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40t45"]
 size = Vector2(16, 16)
@@ -267,7 +270,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=422561725]
+[node name="Player" type="CharacterBody2D" unique_id=422561725 node_paths=PackedStringArray("StateMachine")]
+script = ExtResource("1_6eyoc")
+StateMachine = NodePath("StateMachine")
 
 [node name="Collider" type="CollisionShape2D" parent="." unique_id=193358121]
 position = Vector2(8, 8)
@@ -301,6 +306,11 @@ position = Vector2(8, 8)
 target_position = Vector2(0, 16)
 collide_with_areas = true
 
-[node name="StateMachine" type="Node" parent="." unique_id=495096026]
+[node name="StateMachine" type="Node" parent="." unique_id=495096026 node_paths=PackedStringArray("Customer")]
+script = ExtResource("5_atpat")
+Customer = NodePath("..")
 
-[node name="Roam" type="Node" parent="StateMachine" unique_id=442770225]
+[node name="Roam" type="Node" parent="StateMachine" unique_id=442770225 node_paths=PackedStringArray("PlayerInput", "StateOwner")]
+script = ExtResource("6_kqtwu")
+PlayerInput = NodePath("../../Input")
+StateOwner = NodePath("../..")

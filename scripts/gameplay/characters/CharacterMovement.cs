@@ -6,7 +6,7 @@ namespace Game.Core;
 public partial class CharacterMovement : Node
 {
     [Signal]
-    public delegate void AnimationEventHandler();
+    public delegate void AnimationEventHandler(string animation);
 
     [ExportCategory("Nodes")]
     [Export]
@@ -24,7 +24,14 @@ public partial class CharacterMovement : Node
 
     public override void _Ready()
     {
+        CharacterInput.Walk += StartWalking;
+        CharacterInput.Turn += Turn;
         Logger.Info("Loading player movement component ...");
+    }
+
+    public override void _Process(double delta)
+    {
+        Walk(delta);
     }
 
     public bool IsMoving()
@@ -36,15 +43,11 @@ public partial class CharacterMovement : Node
     {
         if (!IsMoving())
         {
-            // TODO: Walk Animation
+            EmitSignal(SignalName.Animation, "walk");
             TargetPosition =
                 Character.Position + CharacterInput.Direction * Globals.Instance.GRID_SIZE;
             Logger.Info($"Moving from {Character.Position} to {TargetPosition}");
             IsWalking = true;
-        }
-        else
-        {
-            // TODO: Idle Animation
         }
     }
 
@@ -62,6 +65,10 @@ public partial class CharacterMovement : Node
                 StopWalking();
             }
         }
+        else
+        {
+            EmitSignal(SignalName.Animation, "walk");
+        }
     }
 
     public void StopWalking()
@@ -72,7 +79,8 @@ public partial class CharacterMovement : Node
 
     public void Turn()
     {
-        // TODO: Turn Animation
+                    EmitSignal(SignalName.Animation, "turn");
+
     }
 
     public void SnapPositionToGrid()

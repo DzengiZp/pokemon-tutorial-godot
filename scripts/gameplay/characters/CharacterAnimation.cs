@@ -18,6 +18,8 @@ public partial class CharacterAnimation : AnimatedSprite2D
 
     public override void _Ready()
     {
+        CharacterMovement.Animation += PlayAnimation;
+
         Logger.Info("Loading player animation component ...");
     }
 
@@ -87,9 +89,9 @@ public partial class CharacterAnimation : AnimatedSprite2D
         }
 
         if (previousAnimation != ECharacterAnimation)
-    {
-      Logger.Info($"Playing animation {ECharacterAnimation}");
-      Play(ECharacterAnimation.ToString());
-    }
+        {
+            Logger.Info($"Playing animation {ECharacterAnimation}");
+            Play(ECharacterAnimation.ToString());
+        }
     }
 }
