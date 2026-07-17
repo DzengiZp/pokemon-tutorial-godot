@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cub5hx1bmh8bt" path="res://scripts/gameplay/characters/CharacterMovement.cs" id="2_76oj4"]
 [ext_resource type="Script" uid="uid://bvg441e4ljmh8" path="res://scripts/gameplay/characters/CharacterAnimation.cs" id="4_dyp2m"]
 [ext_resource type="Script" uid="uid://cyr483w44y4m5" path="res://scripts/utilities/StateMachine.cs" id="5_atpat"]
+[ext_resource type="Script" uid="uid://csbvdml22vojt" path="res://scripts/gameplay/characters/CharacterCollisionRayCast.cs" id="6_eojnx"]
 [ext_resource type="Script" uid="uid://luncr7c0jxkf" path="res://scripts/gameplay/characters/states/PlayerRoamState.cs" id="6_kqtwu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40t45"]
@@ -282,10 +283,11 @@ debug_color = Color(4.813075e-06, 0.6466164, 0.24018714, 0.41960785)
 [node name="Input" type="Node" parent="." unique_id=730941897]
 script = ExtResource("1_yewv4")
 
-[node name="Movement" type="Node" parent="." unique_id=182255397 node_paths=PackedStringArray("Character", "CharacterInput")]
+[node name="Movement" type="Node" parent="." unique_id=182255397 node_paths=PackedStringArray("Character", "CharacterInput", "CharacterCollisionRayCast")]
 script = ExtResource("2_76oj4")
 Character = NodePath("..")
 CharacterInput = NodePath("../Input")
+CharacterCollisionRayCast = NodePath("../CollisionRayCast")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=477882830 node_paths=PackedStringArray("CharacterInput", "CharacterMovement")]
 texture_filter = 1
@@ -301,10 +303,12 @@ CharacterMovement = NodePath("../Movement")
 position = Vector2(8, 8)
 zoom = Vector2(3, 3)
 
-[node name="CollisionRayCast" type="RayCast2D" parent="." unique_id=1359881837]
+[node name="CollisionRayCast" type="RayCast2D" parent="." unique_id=1359881837 node_paths=PackedStringArray("CharacterInput")]
 position = Vector2(8, 8)
 target_position = Vector2(0, 16)
 collide_with_areas = true
+script = ExtResource("6_eojnx")
+CharacterInput = NodePath("../Input")
 
 [node name="StateMachine" type="Node" parent="." unique_id=495096026 node_paths=PackedStringArray("Customer")]
 script = ExtResource("5_atpat")

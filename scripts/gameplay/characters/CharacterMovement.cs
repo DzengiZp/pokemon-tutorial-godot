@@ -15,6 +15,9 @@ public partial class CharacterMovement : Node
     [Export]
     public CharacterInput CharacterInput;
 
+    [Export]
+    public CharacterCollisionRayCast CharacterCollisionRayCast;
+
     [ExportCategory("Movement")]
     [Export]
     public Vector2 TargetPosition = Vector2.Down;
@@ -22,10 +25,15 @@ public partial class CharacterMovement : Node
     [Export]
     public bool IsWalking = false;
 
+    [Export]
+    public bool CollisionDetected = false;
+
     public override void _Ready()
     {
         CharacterInput.Walk += StartWalking;
         CharacterInput.Turn += Turn;
+
+        CharacterCollisionRayCast.Collision += (value) => CollisionDetected = value;
 
         Logger.Info("Loading player movement component ...");
     }
@@ -40,9 +48,14 @@ public partial class CharacterMovement : Node
         return IsWalking;
     }
 
+    public bool IsColliding()
+    {
+        return CollisionDetected;
+    }
+
     public void StartWalking()
     {
-        if (!IsMoving())
+        if (!IsMoving() && !IsColliding())
         {
             EmitSignal(SignalName.Animation, "walk");
             TargetPosition =
