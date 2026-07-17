@@ -14,6 +14,6 @@ public partial class PlayerInput : CharacterInput
 
     public override void _Ready()
     {
-        Logger.Info("Loading player input command...");
+        Logger.Info("Loading player input component ...");
     }
 }
