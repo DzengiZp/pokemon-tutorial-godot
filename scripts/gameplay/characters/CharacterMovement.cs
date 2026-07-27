@@ -35,7 +35,7 @@ public partial class CharacterMovement : Node
 
         CharacterCollisionRayCast.Collision += (value) => CollisionDetected = value;
 
-        Logger.Info("Loading player movement component ...");
+        Logger.Info("Loading character movement component ...");
     }
 
     public override void _Process(double delta)

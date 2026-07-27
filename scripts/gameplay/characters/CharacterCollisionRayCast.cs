@@ -40,8 +40,8 @@ public partial class CharacterCollisionRayCast : RayCast2D
             }
         }
         else
-    {
-      EmitSignal(SignalName.Collision, false);
-    }
+        {
+            EmitSignal(SignalName.Collision, false);
+        }
     }
 }
